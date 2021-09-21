@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
-import {StyleSheet,TouchableOpacity,Text,View,Image,TextInput, FlatList} from 'react-native';
+import {StyleSheet,TouchableOpacity,Text,View,Image,
+  TextInput, FlatList,Alert} from 'react-native';
 import OurFlatList from './App/components/ourFlatList/OurFlatList';
 
 
@@ -52,10 +53,27 @@ renderItem = ({item}) =>(
     </View>
   </TouchableOpacity>
 )
+
+showAlert = () => {
+  Alert.alert(
+    'Titulo',
+    'Mensaje',
+    [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {text: 'OK', onPress: () => console.log('OK Pressed')},
+    ],
+    {cancelable: false},
+  );
+};
+
   render(){
     return(
       <View style={styles.container}>
-        <OurFlatList/>
+        <OurFlatList showAlert={this.showAlert}/>
       </View>
     );
   }

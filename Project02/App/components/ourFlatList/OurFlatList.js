@@ -22,25 +22,28 @@ const Carros=[
       img: 'https://img.autocosmos.com/noticias/fotosprinc/NAZ_b65480612b9249c0885a3ec88c5641e1.jpg',
     },
   ];
-function Item ({ title }) {
+function Item ({ title, showAlert }) {
     return (
-        <View style={styles.item}>
-            <Text style={styles.title}>{title}</Text>
-        </View>
+        <TouchableOpacity onPress={showAlert}>
+            <View style={styles.item}>
+                <Text style={styles.title}>{title}</Text>
+            </View>
+        </TouchableOpacity>
     );
 }
 
-export default function OurFlatList() {
-    return (
+const OurFlatList = props => (
+
         <View style={styles.container}>
             <FlatList
                 data={Carros}
-                renderItem = { ({item}) => <Item title={item.title}/> }
+                renderItem = { ({item}) => <Item title={item.title} showAlert={props.showAlert}/> }
                 keyExtractor={item => item.id}
             />
         </View>
-    );
-}
+
+)
+export default OurFlatList;
 
 
 const styles = StyleSheet.create({
