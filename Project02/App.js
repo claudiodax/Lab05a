@@ -1,9 +1,32 @@
 import React,{Component} from 'react';
 import {StyleSheet,TouchableOpacity,Text,View,Image,
-  TextInput, FlatList,Alert} from 'react-native';
+  TextInput, FlatList,Alert, Button} from 'react-native';
 import OurFlatList from './App/components/ourFlatList/OurFlatList';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
 
+const Stack = createStackNavigator();
+function HomeScreen({navigation}) {
+  return(
+    <View style={{flex: 1, alignItems:'center', justifyContent: 'center'}}>
+      <Text>Home Screen</Text>
+      <Button
+      title="Go to details"
+      onPress={()=> navigation.navigate('Details')}/>
+    </View>
+  )
+}
+function DetailsScreen({navigation}) {
+  return(
+    <View style={{flex: 1, alignItems:'center', justifyContent: 'center'}}>
+      <Text>Details Screen</Text>
+      <Button
+      title="Go to back to first"
+      onPress={()=> navigation.popToTop()}/>
+    </View>
+  )
+}
 export default class App extends Component{
   constructor(props){
     super(props);
@@ -11,48 +34,10 @@ export default class App extends Component{
       textValue: '',
       textResult: '',
       count: 0,
-      Carros:[
-        {
-          id:1,
-          name: 'Carro rojo clasio',
-          img: 'https://www.elcarrocolombiano.com/wp-content/uploads/2021/01/20210124-LOS-10-CARROS-MAS-VENDIDOS-DEL-MUNDO-EN-2020-01-750x460.jpg',
-        },
-        {
-          id:2,
-          name: 'Carro rojo deportivo',
-          img: 'https://st1.uvnimg.com/d4/4a/006304a74db4902c0b4d8d8026c8/chevrolet-corvette-c8-stingray-2020-1280-08.jpg',
-        },
-        {
-          id:3,
-          name: 'Carro rojo familiar',
-          img: 'https://www.elcarrocolombiano.com/wp-content/uploads/2021/02/20210208-TOP-75-CARROS-MAS-VENDIDOS-DE-COLOMBIA-EN-ENERO-2021-01.jpg',
-        },
-        {
-          id:4,
-          name: 'Carro mistico',
-          img: 'https://img.autocosmos.com/noticias/fotosprinc/NAZ_b65480612b9249c0885a3ec88c5641e1.jpg',
-        },
-      ],
     }
   }
 
-changeTextInput = text => {
-  console.log(text);
-  this.setState({textValue: text});
-};
-onPress = () =>{
-  this.setState({
-    count: this.state.count + 1,
-  })
-};
-renderItem = ({item}) =>(
-  <TouchableOpacity>
-    <View style={styles.contendorLista}>
-      <Image style={styles.imagen} source={{uri:item.img}}/>
-      <Text style={styles.itemLista}>{item.name}</Text>
-    </View>
-  </TouchableOpacity>
-)
+
 
 showAlert = () => {
   Alert.alert(
@@ -72,9 +57,12 @@ showAlert = () => {
 
   render(){
     return(
-      <View style={styles.container}>
-        <OurFlatList showAlert={this.showAlert}/>
-      </View>
+     <NavigationContainer>
+       <Stack.Navigator>
+         <Stack.Screen name="Home" component={HomeScreen}/>
+         <Stack.Screen name="Details" component={DetailsScreen}/>
+       </Stack.Navigator>
+     </NavigationContainer>
     );
   }
 }

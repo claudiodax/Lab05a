@@ -31,7 +31,13 @@ function Item ({ title, showAlert }) {
         </TouchableOpacity>
     );
 }
-
+const ListEmpty = () =>{
+    return(
+        <View>
+            <Text style={{textAlign: 'center'}}>No Data Found</Text>
+        </View>
+    )
+}
 const OurFlatList = props => (
 
         <View style={styles.container}>
@@ -39,6 +45,7 @@ const OurFlatList = props => (
                 data={Carros}
                 renderItem = { ({item}) => <Item title={item.title} showAlert={props.showAlert}/> }
                 keyExtractor={item => item.id}
+                ListEmptyComponent={ListEmpty}
             />
         </View>
 
